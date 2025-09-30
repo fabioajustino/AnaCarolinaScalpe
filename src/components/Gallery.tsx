@@ -1,18 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import beforeAfter1 from "@/assets/before-after-1.png";
 import beforeAfter2 from "@/assets/before-after-2.png";
-import beforeAfter3 from "@/assets/before-after-3.png";
-import beforeAfter4 from "@/assets/before-after-4.png";
-import beforeAfter5 from "@/assets/before-after-5.png";
-import beforeAfter6 from "@/assets/before-after-6.png";
-
-
 
 const Gallery = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const results = [
     {
@@ -29,62 +22,9 @@ const Gallery = () => {
     },
     {
       id: 3,
-      image: beforeAfter3,
+      image: beforeAfter1,
       title: "Microagulhamento Capilar",
       description: "Crescimento notável após 4 meses de sessões"
-    },
-    {
-      id: 4,
-      image: beforeAfter4,
-      title: "Microagulhamento Capilar",
-      description: "Crescimento notável após 4 meses de sessões"
-    },
-    {
-      id: 5,
-      image: beforeAfter5,
-      title: "Microagulhamento Capilar",
-      description: "Crescimento notável após 4 meses de sessões"
-    },
-    {
-      id: 6,
-      image: beforeAfter6,
-      title: "Microagulhamento Capilar",
-      description: "Crescimento notável após 4 meses de sessões"
-    }
-  ];
-
-  // Auto-rotate images
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % results.length);
-    }, 5000); // Change every 8 seconds
-    return () => clearInterval(interval);
-  }, [results.length]);
-
-  const testimonials = [
-    {
-      id: 1,
-      text: "Oi Doutora! O resultado esta muito bom mesmo! Estamos muito felizes. Você está de parabéns!\nUse mesmo o caso dele como modelo, porque está ficando muito bom!",
-      author: "Maria Silva",
-      title: "Paciente"
-    },
-    {
-      id: 2,
-      text: "Oi Carolina. Muito obrigado pelo tratamento que você está fazendo nos meus cabelos, eu já estava ficando careca e hoje meus cabelos estão voltando ao normal.\nEstou muito feliz, meus cabelos pararam de cair e estão aumentando, graças a Deus e a você!",
-      author: "João Santos",
-      title: "Paciente"
-    },
-    {
-      id: 3,
-      text: "Carol, quero agradecer pelo sucesso do tratamento capilar, estou muito feliz com o resultado, meus cabelos estão visivelmente diferentes.\nA sua atenção, seu cuidado e seu profissionalismo fizeram toda a diferença.\nGratidão eterna!",
-      author: "Carla Oliveira",
-      title: "Paciente"
-    },
-    {
-      id: 4,
-      text: "Estou admirada com a mudança dos meus cabelos. O tratamento capilar surtiu efeito em pouco tempo.\nMeus amigos notaram a diferença.\nEstou bastante satisfeita com meu novo visual, com cabelos fortes e saudáveis!",
-      author: "Ricardo Lima",
-      title: "Paciente"
     }
   ];
 
@@ -95,23 +35,6 @@ const Gallery = () => {
   const prevImage = () => {
     setCurrentImage((prev) => (prev - 1 + results.length) % results.length);
   };
-
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 8000); // Change every 8 seconds
-
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
 
   return (
     <section id="resultados" className="py-20 bg-secondary/30">
@@ -126,7 +49,7 @@ const Gallery = () => {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="relative">
             {/* Main Image */}
             <div className="relative overflow-hidden rounded-2xl shadow-elegant">
@@ -138,7 +61,14 @@ const Gallery = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
               
               {/* Image Info */}
-
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <h3 className="text-xl md:text-2xl font-semibold mb-2">
+                  {results[currentImage].title}
+                </h3>
+                <p className="text-sm md:text-base opacity-90">
+                  {results[currentImage].description}
+                </p>
+              </div>
 
               {/* Navigation Arrows */}
               <Button
@@ -174,51 +104,15 @@ const Gallery = () => {
             </div>
           </div>
 
-          {/* Testimonial Carousel */}
-          <div className="gradient-card rounded-xl p-8 mt-12 text-center shadow-card relative">
-            <div className="relative overflow-hidden">
-              <blockquote className="text-lg md:text-xl italic text-muted-foreground mb-4 min-h-[120px] flex items-center justify-center">
-                {testimonials[currentTestimonial].text.split('\n').map((line, idx) => (
-                  <>
-                    {line}<br />
-                  </>
-                ))}
-              </blockquote>
-              <div className="text-sm text-primary font-medium">
-                — {testimonials[currentTestimonial].author}, {testimonials[currentTestimonial].title}
-              </div>
-            </div>
-            
-            {/* Navigation Arrows for Testimonials */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-primary/10 hover:bg-primary/20 text-primary"
-              onClick={prevTestimonial}
-            >
-              <ChevronLeft size={20} />
-            </Button>
-            
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-primary/10 hover:bg-primary/20 text-primary"
-              onClick={nextTestimonial}
-            >
-              <ChevronRight size={20} />
-            </Button>
-
-            {/* Dots Indicator for Testimonials */}
-            <div className="flex justify-center gap-2 mt-6">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-smooth ${
-                    index === currentTestimonial ? "bg-primary" : "bg-muted"
-                  }`}
-                  onClick={() => setCurrentTestimonial(index)}
-                />
-              ))}
+          {/* Testimonial */}
+          <div className="gradient-card rounded-xl p-8 mt-12 text-center shadow-card">
+            <blockquote className="text-lg md:text-xl italic text-muted-foreground mb-4">
+              "A Ana Carolina mudou minha vida! Depois de anos sofrendo com queda de cabelo, 
+              finalmente encontrei uma profissional que entende e trata com carinho. 
+              Os resultados superaram minhas expectativas."
+            </blockquote>
+            <div className="text-sm text-primary font-medium">
+              — Maria Silva, Paciente
             </div>
           </div>
 
